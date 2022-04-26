@@ -20,7 +20,7 @@ class CompanyApiViewListing(BaseApiView):
             serializer = CompanySerializer(company, many=True)
             return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
                                            code='',
-                                           description='Details of serializer', log_description='')
+                                           description='Details of serializer', count=len(company), log_description='')
         except ObjectDoesNotExist:
             return self.send_response(code='422', status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                                       description="No Company matches the given query.")
@@ -70,7 +70,7 @@ class UpdateCompanyApiView(BaseApiView):
             serializer = CompanySerializer(company, many=True)
             return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
                                            code='',
-                                           description='Details of serializer', log_description='')
+                                           description='Details of serializer', count=len(company), log_description='')
         except ObjectDoesNotExist:
             return self.send_response(code='422', status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                                       description="No Company matches the given query.")

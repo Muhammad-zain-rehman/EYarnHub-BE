@@ -38,6 +38,7 @@ class CompanyUpdateSerializer(serializers.ModelSerializer):
                   'company_website']
 
     def update(self, instance, validated_data):
+
         instance.company_name = validated_data.get('company_name', instance.company_name)
         instance.company_email = validated_data.get('company_email', instance.company_email)
         instance.company_manager_name = validated_data.get('company_manager_name', instance.company_manager_name)
