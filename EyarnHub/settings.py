@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'psycopg2',
     'Api',
     'main',
-    'Api.Company'
+    'Api.Company',
+    'Api.Cargo',
 ]
 
 MIDDLEWARE = [
