@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Cargo
+from .models import User
 
 # Register Your model here
-admin.site.register(Cargo)
+admin.site.register(User)
 

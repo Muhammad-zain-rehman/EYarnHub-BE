@@ -7,5 +7,6 @@ app_name = "Api"
 
 urlpatterns = [
     path('company/', include('Api.Company.urls')),
-    path('cargo/', include('Api.Cargo.urls'))
+    path('cargo/', include('Api.Cargo.urls')),
+    path('users/', include('Api.Users.urls'))
 ]
