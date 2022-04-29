@@ -11,9 +11,9 @@ from django.core.management import BaseCommand
 from Api.Users.models import User, Role
 
 
-class Command(BaseCommand):
+def superUser():
     try:
-        name="Super Admin"
+        name = "Super Admin"
         email = settings.SUPER_USER or "superuser@yopamil.com"
         is_staff = True
         is_active = True
@@ -41,7 +41,7 @@ class Command(BaseCommand):
         print(f"User is not created exception:{e}")
 
 
-
+class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             superUser()

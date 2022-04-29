@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'main',
     'Api.Company',
     'Api.Cargo',
-    'Api.Users'
+    'Api.Users',
+    'Api.Post'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ WSGI_APPLICATION = 'EyarnHub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Fyp',
+        'NAME': 'FYP',
         'USER': 'postgres',
         'PASSWORD': 'admin123',
         'HOST': '127.0.0.1',

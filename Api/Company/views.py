@@ -85,7 +85,7 @@ class UpdateCompanyApiView(BaseApiView):
     def put(self, request, pk=None):
         try:
             id1 = pk
-            saved_company = Company.objects.get(id=id1)
+            saved_company = Company.objects.get(pk=id1)
             data = request.data
             serializer = CompanyUpdateSerializer(instance=saved_company, data=data)
             if serializer.is_valid():

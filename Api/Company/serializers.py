@@ -38,13 +38,17 @@ class CompanyUpdateSerializer(serializers.ModelSerializer):
                   'company_website']
 
     def update(self, instance, validated_data):
+        try:
+            instance.company_name = validated_data.get('company_name', instance.company_name)
+            instance.company_email = validated_data.get('company_email', instance.company_email)
+            instance.company_manager_name = validated_data.get('company_manager_name', instance.company_manager_name)
+            instance.company_address = validated_data.get('company_address', instance.company_address)
+            instance.about_company = validated_data.get('about_company', instance.about_company)
+            instance.company_website = validated_data.get('company_website', instance.company_website)
+            instance.save()
 
-        instance.company_name = validated_data.get('company_name', instance.company_name)
-        instance.company_email = validated_data.get('company_email', instance.company_email)
-        instance.company_manager_name = validated_data.get('company_manager_name', instance.company_manager_name)
-        instance.company_address = validated_data.get('company_address', instance.company_address)
-        instance.about_company = validated_data.get('about_company', instance.about_company)
-        instance.company_website = validated_data.get('company_website', instance.company_website)
-        instance.save()
+            return instance
+        except Exception as e:
+            raise e
 
-        return instance
+
