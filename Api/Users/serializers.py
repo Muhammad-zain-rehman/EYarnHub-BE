@@ -2,6 +2,15 @@ from rest_framework import serializers
 from Api.Users.models import User, Role
 
 
+class AuthenticationSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True, allow_blank=False, allow_null=False)
+    password = serializers.CharField(required=True, allow_blank=False, allow_null=False)
+
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+
+
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
     is_active = serializers.BooleanField(required=True)
@@ -49,7 +58,7 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             image = validated_data.pop("image")
             validated_data["image"] = image
             instance.image = validated_data.get('image', instance.image)
-        role= validated_data.get("role_code", None)
+        role = validated_data.get("role_code", None)
         if role:
             instance.user_role = Role.objects.get(code=role)
             # requested_user_role = validated_data.pop("user_role")

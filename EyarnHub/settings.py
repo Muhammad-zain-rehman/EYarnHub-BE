@@ -25,27 +25,59 @@ SECRET_KEY = 'django-insecure-=6)3y%rdf9h7swk4%4qkz^u5ze0qvak40xj&ggrxe_$t26e@76
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+HOST_URL = 'http://192.168.18.16:8000'
+
+AUTHORIZATION_SERVER_URL = f'{HOST_URL}/api/oauth/token/'
+
+REVOKE_TOKEN_URL = os.getenv(
+    'REVOKE_TOKEN_URLs', f'{HOST_URL}/oauth/revoke-token/'
+)
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+    'oauth2_provider.backends.OAuth2Backend'
+]
+
+OAUTH_CLIENT_ID = 'BAq2i8sOFTMhAciGu1eG95TlcllbKRYOJ4qWSVlj'
+OAUTH_CLIENT_SECRET = 'DSxy1OOm3bFh05DyNGLnsc9mD13y7RK5PgNYjcmYmxADi2cqgu3TvDcf76CyIH77U12uNzp1U2Xr4Lo4yrXMTGwIOicDiEJ5x5CHyDkVSEQiL7ipAibUoTIRClyX4c9H'
+
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_EXPIRE_SECONDS': 60 * 60 * 30 * 4,
+}
 
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'psycopg2',
+)
+PROJECT_APPS = (
     'Api',
     'main',
     'Api.Company',
     'Api.Cargo',
     'Api.Users',
     'Api.Post'
-]
+)
+THIRD_PARTY_APPS = (
+    'oauth2_provider',
+    'rest_framework',
+    'psycopg2',
+    'rest_framework.authtoken',
+)
+DEBUG_APPS = (
+    'corsheaders',
+)
+
+INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS + DEBUG_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

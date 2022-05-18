@@ -1,10 +1,65 @@
 from django.db import IntegrityError
-
+from django.contrib.auth import logout, authenticate
 from Api.views import BaseApiView
 from rest_framework import status
 from django.core.exceptions import FieldError, ObjectDoesNotExist
 from Api.Users.models import User
-from Api.Users.serializers import UserSerializer, UserUpdateSerializer
+from Api.Users.serializers import UserSerializer, UserUpdateSerializer, AuthenticationSerializer
+
+
+class LoginView(BaseApiView):
+    """LOGIN View"""
+
+    # authentication_classes = ()
+    # permission_classes = ()
+
+    def post(self, request, pk=None):
+        try:
+            serializer = AuthenticationSerializer(data=request.data)
+            if serializer.is_valid():
+                email = serializer.data.get('email')
+                password = serializer.data.get('password')
+                user = authenticate(request, email=email, password=password)
+                if user:
+                    if user.is_active:
+                        oauth_token = self.get_oauth_token(email, password)
+                        if 'access_token' in oauth_token:
+                            serializer = UserSerializer(User.objects.get(id=user.id))
+                            user_data = serializer.data
+                            user_data['access_data'] = oauth_token.get('access_token')
+                            user_data['refresh_token'] = oauth_token.get('refresh_token')
+                            return self.send_response(
+                                success=True, status_code=status.HTTP_200_OK, payload=user_data,
+                                code=f'200',
+                                description='You are logged In',
+                                log_description=f'User {user_data["email"]}.with id.{user_data["id"]}. has just logged in')
+                        else:
+                            return self.send_response(description="Something went wrong with oauth token generation",
+                                                      code=f'500')
+                    else:
+                        description = 'Your account is blocked or deleted.'
+                        return self.send_response(success=False,
+                                                  code=f'422',
+                                                  status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                                                  payload={},
+                                                  description=description)
+                else:
+                    return self.send_response(
+                        success=False,
+                        code=f'422',
+                        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                        payload={}, description='Email or password is incorrect.'
+                    )
+            else:
+                return self.send_response(
+                    success=False,
+                    code='422',
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    description=serializer.errors
+                )
+        except Exception as e:
+            return self.send_response(code=f'500',
+                                      description=e)
 
 
 class UserApiViewListing(BaseApiView):
