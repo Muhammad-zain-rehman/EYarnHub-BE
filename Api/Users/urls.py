@@ -1,6 +1,7 @@
 from django.urls import path, include
 
 from Api.Users.views import UserApiViewListing,UpdateUserApiView,PostUserApiView,LoginView
+    # LogoutView
 
 app_name = "Users"
 
@@ -12,5 +13,7 @@ urlpatterns = [
     path('add-user', PostUserApiView.as_view(), name='add-user/'),
     path('update-user', UpdateUserApiView.as_view(), name='update-user'),
     path('update-user/<int:pk>', UpdateUserApiView.as_view(), name='update-user'),
-    path('login', LoginView.as_view(), name="login")
+    path('login', LoginView.as_view(), name="login"),
+    # path('logout', LogoutView.as_view(), name="logout")
+
 ]

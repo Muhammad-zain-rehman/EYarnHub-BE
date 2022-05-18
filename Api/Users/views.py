@@ -1,5 +1,8 @@
 from django.db import IntegrityError
 from django.contrib.auth import logout, authenticate
+from rest_framework.authentication import TokenAuthentication
+
+from Api.permissions import IsOauthAuthenticated
 from Api.views import BaseApiView
 from rest_framework import status
 from django.core.exceptions import FieldError, ObjectDoesNotExist
@@ -61,6 +64,28 @@ class LoginView(BaseApiView):
             return self.send_response(code=f'500',
                                       description=e)
 
+
+# class LogoutView(BaseApiView):
+#     authentication_classes = (TokenAuthentication,)
+#     permission_classes = (IsOauthAuthenticated,)
+#
+#     def get(self, request):
+#         try:
+#             token = request.Meta.get("HTTP_AUTHORIZATION", "").replace("Bearer", "")
+#             if not self.revoke_oauth_token(token):
+#                 return self.send_response(code=f'422', status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+#                                           description="User doesn't logout")
+#             logout(request)
+#             return self.send_response(success=True, code=f'201', status_code=status.HTTP_201_CREATED, payload=[],
+#                                       description='User logout successfully')
+#         except User.DoesNotExist:
+#             return self.send_response(code=f'422', status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+#                                       description="User doesn't exists")
+#         except FieldError:
+#             return self.send_response(code=f'500', description="Cannot resolve keyword given in 'order_by' into field")
+#         except Exception as e:
+#             return self.send_response(code=f'500', description=e)
+#
 
 class UserApiViewListing(BaseApiView):
     def get(self, request, pk=None):

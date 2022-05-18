@@ -26,13 +26,14 @@ SECRET_KEY = 'django-insecure-=6)3y%rdf9h7swk4%4qkz^u5ze0qvak40xj&ggrxe_$t26e@76
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True
 
 HOST_URL = 'http://192.168.18.16:8000'
 
 AUTHORIZATION_SERVER_URL = f'{HOST_URL}/api/oauth/token/'
 
 REVOKE_TOKEN_URL = os.getenv(
-    'REVOKE_TOKEN_URLs', f'{HOST_URL}/oauth/revoke-token/'
+    'REVOKE_TOKEN_URLs', f'{HOST_URL}/api/oauth/revoke-token/'
 )
 
 AUTHENTICATION_BACKENDS = [
@@ -80,6 +81,7 @@ INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS + DEBUG_APPS
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -143,6 +145,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+#
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+#     ),
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     )
+# }
 
 
 # Internationalization
