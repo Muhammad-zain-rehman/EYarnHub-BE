@@ -93,14 +93,14 @@ class UserApiViewListing(BaseApiView):
             if pk is not None:
                 user = User.objects.get(id=pk)
                 serializer = UserSerializer(user)
-                return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
-                                               code='',
-                                               description='Details of serializer', log_description='')
+                return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
+                                          code='',
+                                          description='Details of serializer', log_description='')
             company = User.objects.all()
             serializer = UserSerializer(company, many=True)
-            return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
-                                           code='',
-                                           description='Details of serializer', count=len(company), log_description='')
+            return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
+                                      code='',
+                                      description='Details of serializer', count=len(company), log_description='')
         except ObjectDoesNotExist:
             return self.send_response(code='422', status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                                       description="No user matches the given query.")

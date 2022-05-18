@@ -63,12 +63,12 @@ class UpdateCompanyApiView(BaseApiView):
             if pk is not None:
                 company = Company.objects.get(id=pk)
                 serializer = CompanySerializer(company)
-                return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
+                return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
                                                code='',
                                                description='Details of serializer', log_description='')
             company = Company.objects.all()
             serializer = CompanySerializer(company, many=True)
-            return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
+            return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
                                            code='',
                                            description='Details of serializer', count=len(company), log_description='')
         except ObjectDoesNotExist:
