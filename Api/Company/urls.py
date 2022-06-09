@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from Api.Company.views import CompanyApiViewListing, PostCompanyApiView,UpdateCompanyApiView
+from Api.Company.views import CompanyApiViewListing, PostCompanyApiView, UpdateCompanyApiView, EnableDisableCompanyView
 
 app_name = "Company"
 
@@ -12,6 +12,8 @@ urlpatterns = [
 
     path('add-company', PostCompanyApiView.as_view(), name='add-company/'),
     path('update-company', UpdateCompanyApiView.as_view(), name='update-company'),
-    path('update-company/<int:pk>', UpdateCompanyApiView.as_view(), name='update-company')
+    path('update-company/<int:pk>', UpdateCompanyApiView.as_view(), name='update-company'),
+
+    path('enable-disable/<int:pk>', EnableDisableCompanyView.as_view(), name='enable-disable-company')
 
 ]

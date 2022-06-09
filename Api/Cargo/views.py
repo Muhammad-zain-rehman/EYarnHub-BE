@@ -137,13 +137,13 @@ class EnableDisableCargoViewView(BaseApiView):
                 return self.send_response(success=True,
                                           status_code=status.HTTP_200_OK,
                                           code='',
-                                          description='Company has enabled'
+                                          description='Company enabled Successfully!'
                                           )
             else:
                 return self.send_response(success=True,
                                           code='',
                                           status_code=status.HTTP_200_OK,
-                                          description='Company has disabled'
+                                          description='Company disabled Successfully!'
                                           )
         except Exception as e:
             return self.send_response(success=False,

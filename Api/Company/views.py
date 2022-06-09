@@ -133,3 +133,27 @@ class UpdateCompanyApiView(BaseApiView):
             return self.send_response(code=f'500', description="Cannot resolve keyword given in 'order_by' into field")
         except Exception as e:
             return self.send_response(code=f'500', description=e)
+
+
+class EnableDisableCompanyView(BaseApiView):
+    def get(self, request, pk=None):
+        try:
+            obj = Company.objects.get(id=pk)
+            obj.is_active = not obj.is_active
+            obj.save()
+            if obj.is_active:
+                return self.send_response(success=True,
+                                          status_code=status.HTTP_200_OK,
+                                          code='',
+                                          description='Company enabled Successfully!'
+                                          )
+            else:
+                return self.send_response(success=True,
+                                          code='',
+                                          status_code=status.HTTP_200_OK,
+                                          description='Company disabled Successfully!'
+                                          )
+        except Exception as e:
+            return self.send_response(success=False,
+                                      code=status.HTTP_400_BAD_REQUEST,
+                                      description='Compnay does not exist')

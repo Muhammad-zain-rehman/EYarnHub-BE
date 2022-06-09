@@ -9,11 +9,12 @@ class CompanySerializer(serializers.ModelSerializer):
     company_address = serializers.CharField(required=True, allow_null=False, allow_blank=False)
     about_company = serializers.CharField(required=True, allow_null=False, allow_blank=False)
     company_website = serializers.URLField(allow_blank=False, allow_null=False)
+    is_active = serializers.BooleanField(required=False)
 
     class Meta:
         model = Company
         fields = ['id', 'company_name', 'company_email', 'company_manager_name', 'company_address', 'about_company',
-                  'company_website']
+                  'company_website','is_active']
 
     def create(self, validated_data):
         # try:
