@@ -14,13 +14,13 @@ class CargoCompanyApiViewListing(BaseApiView):
                 company = Cargo.objects.get(id=pk)
                 serializer = CargoSerializer(company)
                 return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
-                                               code='',
-                                               description='Details of serializer', log_description='')
+                                          code='',
+                                          description='Details of serializer', log_description='')
             cargoObjects = Cargo.objects.all()
             serializer = CargoSerializer(cargoObjects, many=True)
             return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
-                                           code='',
-                                           description='Details of serializer', count=len(cargoObjects), log_description='')
+                                      code='',
+                                      description='Details of serializer', count=len(cargoObjects), log_description='')
         except ObjectDoesNotExist:
             return self.send_response(code='422', status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                                       description="No Company matches the given query.")
@@ -125,3 +125,27 @@ class UpdateCargoCompanyApiView(BaseApiView):
             return self.send_response(code=f'500', description="Cannot resolve keyword given in 'order_by' into field")
         except Exception as e:
             return self.send_response(code=f'500', description=e)
+
+
+class EnableDisableCargoViewView(BaseApiView):
+    def get(self, request, pk=None):
+        try:
+            obj = Cargo.objects.get(id=pk)
+            obj.is_active = not obj.is_active
+            obj.save()
+            if obj.is_active:
+                return self.send_response(success=True,
+                                          status_code=status.HTTP_200_OK,
+                                          code='',
+                                          description='Company has enabled'
+                                          )
+            else:
+                return self.send_response(success=True,
+                                          code='',
+                                          status_code=status.HTTP_200_OK,
+                                          description='Company has disabled'
+                                          )
+        except Exception as e:
+            return self.send_response(success=False,
+                                      code=status.HTTP_400_BAD_REQUEST,
+                                      description='Compnay does not exist')

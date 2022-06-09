@@ -1,6 +1,7 @@
 from django.urls import path, include
 
-from Api.Cargo.views import CargoCompanyApiViewListing, PostCargoCompanyApiView, UpdateCargoCompanyApiView
+from Api.Cargo.views import CargoCompanyApiViewListing, PostCargoCompanyApiView, UpdateCargoCompanyApiView, \
+    EnableDisableCargoViewView
 
 app_name = "Cargo"
 
@@ -11,6 +12,7 @@ urlpatterns = [
 
     path('add-cargo-company', PostCargoCompanyApiView.as_view(), name='add-cargo=company/'),
     path('update-cargo-company', UpdateCargoCompanyApiView.as_view(), name='update-cargo-company'),
-    path('update-cargo-company/<int:pk>', UpdateCargoCompanyApiView.as_view(), name='update-cargo-company')
+    path('update-cargo-company/<int:pk>', UpdateCargoCompanyApiView.as_view(), name='update-cargo-company'),
+    path('enable-disable/<int:pk>', EnableDisableCargoViewView.as_view(), name='enable-disable-cargo-company')
 
 ]

@@ -6,10 +6,11 @@ class CargoSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True, allow_null=False, allow_blank=False)
     slogan = serializers.CharField(required=True, allow_null=False, allow_blank=False)
     phone_number = serializers.CharField(required=True, allow_null=False, allow_blank=False)
+    is_active = serializers.BooleanField(required=False)
 
     class Meta:
         model = Cargo
-        fields = ['id', 'name', 'slogan', 'phone_number']
+        fields = ['id', 'name', 'slogan', 'phone_number', 'is_active']
 
     def create(self, validated_data):
         cargo_company = Cargo.objects.create(**validated_data)
