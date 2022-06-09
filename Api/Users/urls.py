@@ -1,7 +1,8 @@
 from django.urls import path, include
 
-from Api.Users.views import UserApiViewListing,UpdateUserApiView,PostUserApiView,LoginView
-    # LogoutView
+from Api.Users.views import UserApiViewListing, UpdateUserApiView, PostUserApiView, LoginView, EnableDisableUserView
+
+# LogoutView
 
 app_name = "Users"
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('update-user', UpdateUserApiView.as_view(), name='update-user'),
     path('update-user/<int:pk>', UpdateUserApiView.as_view(), name='update-user'),
     path('login', LoginView.as_view(), name="login"),
+    path('enable-disable/<int:pk>', EnableDisableUserView.as_view(), name='enable-disable-user')
     # path('logout', LogoutView.as_view(), name="logout")
 
 ]

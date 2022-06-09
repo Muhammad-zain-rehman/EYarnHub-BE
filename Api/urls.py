@@ -4,7 +4,6 @@ from Api.Company import urls
 app_name = "Api"
 
 # app_name will help us do a reverse look-up latter.
-
 urlpatterns = [
     re_path(r'^oauth/outhorize/$', oauth2_views.AuthorizationView.as_view(), name="authorize"),
     re_path(r'^oauth/token/$', oauth2_views.TokenView.as_view(),name="token"),
@@ -16,5 +15,8 @@ urlpatterns = [
     path('cargo/<int:pk>', include('Api.Cargo.urls')),
 
     path('users/', include('Api.Users.urls')),
+    path('users/<int:pk>', include('Api.Users.urls')),
+
     path('posts/', include('Api.Post.urls'))
 ]
+
