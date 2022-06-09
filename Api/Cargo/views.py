@@ -13,12 +13,12 @@ class CargoCompanyApiViewListing(BaseApiView):
             if pk is not None:
                 company = Cargo.objects.get(id=pk)
                 serializer = CargoSerializer(company)
-                return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
+                return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
                                                code='',
                                                description='Details of serializer', log_description='')
             cargoObjects = Cargo.objects.all()
             serializer = CargoSerializer(cargoObjects, many=True)
-            return self.send_data_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
+            return self.send_response(success=True, status_code=status.HTTP_200_OK, payload=serializer.data,
                                            code='',
                                            description='Details of serializer', count=len(cargoObjects), log_description='')
         except ObjectDoesNotExist:

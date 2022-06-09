@@ -10,7 +10,11 @@ urlpatterns = [
     re_path(r'^oauth/token/$', oauth2_views.TokenView.as_view(),name="token"),
     re_path(r'oauth/revoke-token/$', oauth2_views.RevokeTokenView.as_view(), name="revoke_token"),
     path('company/', include('Api.Company.urls')),
+    path('company/<int:pk>', include('Api.Company.urls')),
+
     path('cargo/', include('Api.Cargo.urls')),
+    path('cargo/<int:pk>', include('Api.Cargo.urls')),
+
     path('users/', include('Api.Users.urls')),
     path('posts/', include('Api.Post.urls'))
 ]

@@ -25,6 +25,6 @@ class Company(Base):
         try:
             if not self.pk:
                 self.company_email = self.company_email.replace(" ", "").lower()
-                super().save()
+            super().save()
         except Exception:
             raise
