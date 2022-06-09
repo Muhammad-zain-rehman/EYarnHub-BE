@@ -13,7 +13,7 @@ class AuthenticationSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
-    is_active = serializers.BooleanField(required=True)
+    is_active = serializers.BooleanField(required=False)
     email = serializers.EmailField(required=True)
     image = serializers.ImageField(required=True, allow_null=True, allow_empty_file=True)
     user_role = serializers.SerializerMethodField(read_only=True)
